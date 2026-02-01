@@ -4,7 +4,7 @@ Ergonomic error handling for Rust with automatic stack traces.
 
 [![Crates.io](https://img.shields.io/crates/v/handle-this.svg)](https://crates.io/crates/handle-this)
 [![Documentation](https://docs.rs/handle-this/badge.svg)](https://docs.rs/handle-this)
-[![License](https://img.shields.io/crates/l/handle-this.svg)](LICENSE)
+[![License](https://img.shields.io/crates/l/handle-this.svg)](#license)
 [![Tests](https://img.shields.io/badge/tests-210%2C657-brightgreen)](tests/)
 
 ## This Is Not Exception Handling

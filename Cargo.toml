@@ -1,6 +1,6 @@
 [package]
 name = "handle-this"
-version = "0.2.1"
+version = "0.2.2"
 edition = "2021"
 rust-version = "1.70"
 description = "Ergonomic error handling with try/catch/throw/inspect/finally syntax and automatic stack traces"
@@ -12,7 +12,7 @@ keywords = ["error", "handling", "try", "catch", "macro"]
 categories = ["rust-patterns", "development-tools", "no-std"]
 
 [dependencies]
-handle-this-macros = { path = "handle-this-macros", version = "0.2.1" }
+handle-this-macros = { path = "handle-this-macros", version = "0.2.2" }
 smallvec = { version = "1.15.1", default-features = false }
 
 [dev-dependencies]

@@ -1,0 +1,54 @@
+{
+    "scopeName": "handle-this.injection",
+    "injectionSelector": "L:source.rust -string -comment",
+    "patterns": [
+        { "match": "\\b(catch|throw|inspect)\\s+(any|all)\\s+([A-Za-z_][A-Za-z0-9_]*)(?:::([A-Za-z_][A-Za-z0-9_]*))?(?:::([A-Za-z_][A-Za-z0-9_]*))?\\s*(\\()([^)]*)(\\))", "captures": {
+            "1": { "name": "keyword.control.handle-this.rust" },
+            "2": { "name": "keyword.modifier.handle-this.rust" },
+            "3": { "name": "entity.name.type.handler.handle-this.rust" },
+            "4": { "name": "entity.name.type.handler.handle-this.rust" },
+            "5": { "name": "entity.name.type.handler.handle-this.rust" },
+            "6": { "name": "punctuation.brackets.handle-this.rust" },
+            "7": { "name": "variable.parameter.handle-this.rust" },
+            "8": { "name": "punctuation.brackets.handle-this.rust" }
+        }},
+        { "match": "\\b(catch|throw|inspect)\\s+([A-Za-z_][A-Za-z0-9_]*)(?:::([A-Za-z_][A-Za-z0-9_]*))?(?:::([A-Za-z_][A-Za-z0-9_]*))?\\s*(\\()([^)]*)(\\))", "captures": {
+            "1": { "name": "keyword.control.handle-this.rust" },
+            "2": { "name": "entity.name.type.handler.handle-this.rust" },
+            "3": { "name": "entity.name.type.handler.handle-this.rust" },
+            "4": { "name": "entity.name.type.handler.handle-this.rust" },
+            "5": { "name": "punctuation.brackets.handle-this.rust" },
+            "6": { "name": "variable.parameter.handle-this.rust" },
+            "7": { "name": "punctuation.brackets.handle-this.rust" }
+        }},
+        { "match": "\\b(catch|throw|inspect)\\s+(any|all)\\b", "captures": {
+            "1": { "name": "keyword.control.handle-this.rust" },
+            "2": { "name": "keyword.modifier.handle-this.rust" }
+        }},
+        { "match": "\\b(async)\\b", "name": "keyword.async.handle-this.rust" },
+        { "match": "\\b(try)\\s+(while|for|catch)\\b", "captures": {
+            "1": { "name": "keyword.control.handle-this.rust" },
+            "2": { "name": "keyword.control.handle-this.rust" }
+        }},
+        { "match": "\\b(try)\\s+(any|all)\\b", "captures": {
+            "1": { "name": "keyword.control.handle-this.rust" },
+            "2": { "name": "keyword.modifier.handle-this.rust" }
+        }},
+        { "match": "\\b(try|finally)(?=\\s*\\{)", "name": "keyword.control.handle-this.rust" },
+        { "match": "\\b(try)(?=\\s+when\\b)", "name": "keyword.control.handle-this.rust" },
+        { "match": "\\b(require)(?=\\s+[a-zA-Z_!])", "name": "keyword.control.handle-this.rust" },
+        { "match": "\\b(scope)(?=\\s+\")", "name": "keyword.control.handle-this.rust" },
+        { "match": "\\b(then)(?=\\s*[|{])", "name": "keyword.control.handle-this.rust" },
+        { "match": "\\b(catch|throw|inspect)(?=\\s+[a-zA-Z_])", "name": "keyword.control.handle-this.rust" },
+        { "match": "\\b(catch|throw)(?=\\s*\\{)", "name": "keyword.control.handle-this.rust" },
+        { "match": "\\b(with)(?=\\s*[\"{])", "name": "keyword.control.handle-this.rust" },
+        { "match": "\\b(when)(?=\\s+[a-zA-Z_!])", "name": "keyword.control.handle-this.rust" },
+        { "match": "\\b(else)(?=\\s*[\\{\"])", "name": "keyword.control.handle-this.rust" },
+        { "match": "\\b(h)(a)(n)(d)(l)(e)(!)", "captures": {
+            "1": { "name": "handle-this.h.rust" }, "2": { "name": "handle-this.a.rust" },
+            "3": { "name": "handle-this.n.rust" }, "4": { "name": "handle-this.d.rust" },
+            "5": { "name": "handle-this.l.rust" }, "6": { "name": "handle-this.e.rust" },
+            "7": { "name": "handle-this.bang.rust" }
+        }}
+    ]
+}

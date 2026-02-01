@@ -1,0 +1,5 @@
+error: try body cannot be empty: `try { EXPR }`
+ --> tests/ui/empty_try_body.rs:8:9
+  |
+8 |         catch { 0 }
+  |         ^^^^^

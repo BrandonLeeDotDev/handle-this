@@ -1,0 +1,5 @@
+error: untyped `catch` handles all errors; `throw` after it will never execute. If catch body can fail, use `try catch { ... }` instead which returns Result
+ --> tests/ui/throw_after_untyped_catch.rs:8:9
+  |
+8 |         catch e { 0 }         // catches ALL errors
+  |         ^^^^^

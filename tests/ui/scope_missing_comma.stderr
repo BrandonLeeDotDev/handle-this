@@ -1,0 +1,5 @@
+error: expected ',' after scope name: `scope "name", try { ... }`
+ --> tests/ui/scope_missing_comma.rs:7:15
+  |
+7 |         scope "test"  // missing comma
+  |               ^^^^^^

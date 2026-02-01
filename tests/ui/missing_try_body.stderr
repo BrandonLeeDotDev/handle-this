@@ -1,0 +1,5 @@
+error: `try` requires a body: `try { ... }`
+ --> tests/ui/missing_try_body.rs:7:9
+  |
+7 |         try
+  |         ^^^

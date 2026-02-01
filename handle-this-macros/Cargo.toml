@@ -1,0 +1,18 @@
+[package]
+name = "handle-this-macros"
+version = "0.2.0"
+edition = "2021"
+rust-version = "1.70"
+description = "Proc macros for handle-this error handling crate"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/BrandonLeeDotDev/handle-this"
+keywords = ["error", "macro", "proc-macro"]
+categories = ["rust-patterns"]
+
+[lib]
+proc-macro = true
+
+[dependencies]
+proc-macro2 = "1"
+quote = "1"
+syn = { version = "2", features = ["full", "parsing", "extra-traits"] }

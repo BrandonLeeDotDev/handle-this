@@ -1,0 +1,5 @@
+error: `scope` cannot be used with direct mode `try -> T { }`. Direct mode guarantees success, but `scope` wraps errors. Use `try { }` instead of `try -> T { }`
+ --> tests/ui/scope_with_direct_mode.rs:8:9
+  |
+8 |         try -> i32 { Ok::<i32, &str>(42)? }
+  |         ^^^

@@ -1,0 +1,5 @@
+error: `__err` is reserved for internal use; choose a different binding name
+ --> tests/ui/reserved_binding_name.rs:8:15
+  |
+8 |         catch __err { 0 }  // __err is reserved
+  |               ^^^^^

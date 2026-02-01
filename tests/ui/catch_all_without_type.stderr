@@ -1,0 +1,5 @@
+error: `all` requires a type: `catch all Type |errors| { ... }`
+ --> tests/ui/catch_all_without_type.rs:8:19
+  |
+8 |         catch all e { 0 }  // all without type path
+  |                   ^

@@ -1,0 +1,5 @@
+error: direct mode (try -> T) requires a catch-all fallback: add `catch { ... }`
+ --> tests/ui/direct_mode_no_catchall.rs:8:9
+  |
+8 |         catch std::io::Error { 0 }  // typed catch only - not a catch-all
+  |         ^^^^^

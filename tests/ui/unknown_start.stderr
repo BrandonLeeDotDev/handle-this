@@ -1,0 +1,5 @@
+error: expected `try`, `require`, or `scope`, found `foo`
+ --> tests/ui/unknown_start.rs:7:9
+  |
+7 |         foo  // not a valid keyword
+  |         ^^^

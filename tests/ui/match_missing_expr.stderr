@@ -1,0 +1,5 @@
+error: expected expression after `match`: `catch Type(e) match e { ... }`
+ --> tests/ui/match_missing_expr.rs:8:17
+  |
+8 |         catch e match { _ => 0 }  // missing expression before { }
+  |                 ^^^^^

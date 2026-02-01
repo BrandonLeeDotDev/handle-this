@@ -1,0 +1,5 @@
+error: expected condition before `{`
+ --> tests/ui/try_while_no_condition.rs:7:19
+  |
+7 |         try while { Ok::<i32, &str>(1) }
+  |                   ^

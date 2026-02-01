@@ -1,0 +1,40 @@
+{
+    "name": "handle-this-syntax",
+    "displayName": "handle-this Syntax",
+    "description": "Syntax highlighting, hover documentation, and LSP for the handle-this Rust error handling macro",
+    "version": "2.10.0",
+    "publisher": "local",
+    "icon": "icon.png",
+    "engines": { "vscode": "^1.74.0" },
+    "main": "./extension.js",
+    "activationEvents": ["onLanguage:rust"],
+    "categories": ["Programming Languages", "Themes", "Linters"],
+    "keywords": ["rust", "handle-this", "error-handling", "macro", "syntax", "try-catch", "error", "result", "lsp"],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/BrandonLeeDotDev/handle-this"
+    },
+    "contributes": {
+        "grammars": [{
+            "path": "./syntaxes/injection.json",
+            "scopeName": "handle-this.injection",
+            "injectTo": ["source.rust"]
+        }],
+        "commands": [{
+            "command": "handleThis.openColorPicker",
+            "title": "handle-this: Configure Colors"
+        }],
+        "configuration": {
+            "title": "handle-this",
+            "properties": {
+                "handleThis.configureColors": {
+                    "type": "null",
+                    "markdownDescription": "[Configure Colors](command:handleThis.openColorPicker)"
+                }
+            }
+        },
+        "configurationDefaults": {
+            "[rust]": { "editor.semanticHighlighting.enabled": false }
+        }
+    }
+}

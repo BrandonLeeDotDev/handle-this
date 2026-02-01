@@ -1,0 +1,5 @@
+error: `else` requires either direct mode (`try -> T { } else { }`) or a typed handler (`catch Type { } else { }`)
+ --> tests/ui/else_without_direct_mode.rs:9:9
+  |
+9 |         else { -1 }  // else not valid without direct mode
+  |         ^^^^

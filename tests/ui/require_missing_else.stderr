@@ -1,0 +1,5 @@
+error: missing 'else' in require: `require COND else "message", ...`
+ --> tests/ui/require_missing_else.rs:7:17
+  |
+7 |         require true,  // missing else
+  |                 ^^^^

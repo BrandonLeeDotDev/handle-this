@@ -1,0 +1,5 @@
+error: `any` requires a type: `catch any Type(e) { ... }`
+ --> tests/ui/catch_any_without_type.rs:8:19
+  |
+8 |         catch any e { 0 }  // any without type path
+  |                   ^

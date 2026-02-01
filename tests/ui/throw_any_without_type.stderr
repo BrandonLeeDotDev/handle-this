@@ -1,0 +1,5 @@
+error: `any` requires a type: `throw any Type(e) { ... }`
+ --> tests/ui/throw_any_without_type.rs:8:19
+  |
+8 |         throw any e { "transformed" }
+  |                   ^

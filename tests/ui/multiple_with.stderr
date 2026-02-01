@@ -1,0 +1,5 @@
+error: multiple `with` clauses are not allowed; combine context into a single `with { ... }`
+  --> tests/ui/multiple_with.rs:10:9
+   |
+10 |         with { key: "second" }
+   |         ^^^^

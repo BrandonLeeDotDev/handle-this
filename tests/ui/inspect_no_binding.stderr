@@ -1,0 +1,5 @@
+error: `inspect` requires a binding: `inspect e { ... }`
+ --> tests/ui/inspect_no_binding.rs:8:17
+  |
+8 |         inspect { println!("no binding"); }
+  |                 ^

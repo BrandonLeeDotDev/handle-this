@@ -1,0 +1,5 @@
+error: `all` uses `|binding|` not `(binding)`: `catch all Type |errors| { ... }`
+ --> tests/ui/catch_all_wrong_binding.rs:8:25
+  |
+8 |         catch all String(e) { 0 }  // should be |e| not (e)
+  |                         ^

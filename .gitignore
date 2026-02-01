@@ -1,0 +1,29 @@
+# Dot files and directories
+.*
+!.gitignore
+
+# Claude related
+CLAUDE.md
+PLAN.md
+.claude/
+
+# Rust
+target/
+Cargo.lock
+
+# Generated tests
+tests/matrix_*.rs
+tests/matrix_common.rs
+
+# Backup files
+*.zip
+bak/
+
+# Editor/IDE
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

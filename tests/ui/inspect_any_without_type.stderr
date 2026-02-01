@@ -1,0 +1,5 @@
+error: `any` requires a type: `inspect any Type(e) { ... }`
+ --> tests/ui/inspect_any_without_type.rs:8:21
+  |
+8 |         inspect any e { println!("log"); }
+  |                     ^

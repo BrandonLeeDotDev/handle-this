@@ -1,0 +1,5 @@
+error: expected `in`
+ --> tests/ui/try_for_missing_var.rs:7:20
+  |
+7 |         try for in [1, 2, 3] { Ok::<i32, &str>(1) }
+  |                    ^

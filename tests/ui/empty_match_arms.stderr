@@ -1,0 +1,5 @@
+error: match arms cannot be empty
+ --> tests/ui/empty_match_arms.rs:8:17
+  |
+8 |         catch e match e { }  // empty match arms
+  |                 ^^^^^

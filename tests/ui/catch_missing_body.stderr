@@ -1,0 +1,5 @@
+error: missing body after binding, expected `{ ... }`
+ --> tests/ui/catch_missing_body.rs:8:15
+  |
+8 |         catch e  // missing body
+  |               ^

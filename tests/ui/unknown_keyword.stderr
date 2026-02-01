@@ -1,0 +1,5 @@
+error: unexpected keyword `handle`, expected catch/throw/inspect/finally/with/else
+ --> tests/ui/unknown_keyword.rs:8:9
+  |
+8 |         handle e { 0 }  // 'handle' is not a valid keyword
+  |         ^^^^^^

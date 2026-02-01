@@ -1,0 +1,5 @@
+error: multiple `finally` blocks are not allowed; combine into a single block
+ --> tests/ui/multiple_finally.rs:9:9
+  |
+9 |         finally { println!("second"); }
+  |         ^^^^^^^

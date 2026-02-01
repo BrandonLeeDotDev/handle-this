@@ -1,0 +1,5 @@
+error: `scope` must appear before `try`, not after handlers. Use: `scope "name", try { } catch { }`
+ --> tests/ui/scope_after_handlers.rs:9:9
+  |
+9 |         scope "test",  // scope after handlers is wrong
+  |         ^^^^^

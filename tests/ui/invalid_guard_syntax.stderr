@@ -1,0 +1,5 @@
+error: use `when` for guards, not `if`: `catch e when condition { ... }`
+ --> tests/ui/invalid_guard_syntax.rs:8:17
+  |
+8 |         catch e if true { 0 }  // 'if' instead of 'when'
+  |                 ^^

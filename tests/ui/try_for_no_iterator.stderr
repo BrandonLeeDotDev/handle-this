@@ -1,0 +1,5 @@
+error: missing iterator expression: `try for x in ITERATOR { ... }`
+ --> tests/ui/try_for_no_iterator.rs:7:22
+  |
+7 |         try for x in { Ok::<i32, &str>(42)? }  // missing iterator
+  |                      ^

@@ -1,0 +1,5 @@
+error: expected condition after `when`
+ --> tests/ui/when_no_condition.rs:8:22
+  |
+8 |         catch e when { 0 }
+  |                      ^

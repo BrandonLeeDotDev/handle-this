@@ -9,7 +9,7 @@ To run tests, you must generate them first using `scripts/generate_full_matrix.p
 ## Generating Tests
 
 ```bash
-# Generate all tests (WARNING: creates 88k+ tests)
+# Generate all tests (WARNING: creates 210k+ tests)
 python3 scripts/generate_full_matrix.py --all
 
 # List available filter options

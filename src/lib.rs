@@ -104,6 +104,10 @@ pub use ext::HandleExt;
 #[cfg(feature = "std")]
 pub use handled::__wrap_any;
 
+// Re-export proc-macro crate for nested pattern expansion
+#[doc(hidden)]
+pub use handle_this_macros;
+
 // ============================================================
 // Type aliases
 // ============================================================

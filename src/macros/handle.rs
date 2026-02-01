@@ -72,12 +72,12 @@ macro_rules! handle {
 
     // require COND else "msg", rest...
     (require $($rest:tt)+) => {
-        ::handle_this_macros::__handle_proc!(REQUIRE $($rest)+)
+        $crate::handle_this_macros::__handle_proc!(REQUIRE $($rest)+)
     };
 
     // scope "name", rest...
     (scope $($rest:tt)+) => {
-        ::handle_this_macros::__handle_proc!(SCOPE $($rest)+)
+        $crate::handle_this_macros::__handle_proc!(SCOPE $($rest)+)
     };
 
     // ========================================
@@ -86,7 +86,7 @@ macro_rules! handle {
 
     // try when CONDITION { } else when ... else { } handlers...
     (try when $($rest:tt)+) => {
-        ::handle_this_macros::__handle_proc!(WHEN $($rest)+)
+        $crate::handle_this_macros::__handle_proc!(WHEN $($rest)+)
     };
 
     // ========================================
@@ -96,46 +96,46 @@ macro_rules! handle {
 
     // async try { } , then ... (must come before general async)
     (async try { $($body:tt)* } , then $($rest:tt)+) => {
-        ::handle_this_macros::__handle_proc!(THEN ASYNC { $($body)* } , then $($rest)+)
+        $crate::handle_this_macros::__handle_proc!(THEN ASYNC { $($body)* } , then $($rest)+)
     };
 
     // async try { } handlers...
     (async try { $($body:tt)* } $($rest:tt)+) => {
-        ::handle_this_macros::__handle_proc!(ASYNC { $($body)* } $($rest)+)
+        $crate::handle_this_macros::__handle_proc!(ASYNC { $($body)* } $($rest)+)
     };
 
     // async try { } alone
     (async try { $($body:tt)* }) => {
-        ::handle_this_macros::__handle_proc!(ASYNC { $($body)* })
+        $crate::handle_this_macros::__handle_proc!(ASYNC { $($body)* })
     };
 
     // try { } , then ... (basic - must come before general try)
     (try { $($body:tt)* } , then $($rest:tt)+) => {
-        ::handle_this_macros::__handle_proc!(THEN BASIC { $($body)* } , then $($rest)+)
+        $crate::handle_this_macros::__handle_proc!(THEN BASIC { $($body)* } , then $($rest)+)
     };
 
     // try { } with ... (may or may not have then)
     (try { $($body:tt)* } with $($with_and_rest:tt)+) => {
-        ::handle_this_macros::__then_or_sync!(BASIC { $($body)* } with $($with_and_rest)+)
+        $crate::handle_this_macros::__then_or_sync!(BASIC { $($body)* } with $($with_and_rest)+)
     };
 
     // try -> T { } , then ... (direct mode with then)
     (try -> $type:ty { $($body:tt)* } , then $($rest:tt)+) => {
-        ::handle_this_macros::__handle_proc!(THEN DIRECT -> $type { $($body)* } , then $($rest)+)
+        $crate::handle_this_macros::__handle_proc!(THEN DIRECT -> $type { $($body)* } , then $($rest)+)
     };
 
     // try for/any/all/while - route through proc macro for then detection
     (try for $($all:tt)+) => {
-        ::handle_this_macros::__then_or_iter!(FOR $($all)+)
+        $crate::handle_this_macros::__then_or_iter!(FOR $($all)+)
     };
     (try any $($all:tt)+) => {
-        ::handle_this_macros::__then_or_iter!(ANY $($all)+)
+        $crate::handle_this_macros::__then_or_iter!(ANY $($all)+)
     };
     (try all $($all:tt)+) => {
-        ::handle_this_macros::__then_or_iter!(ALL $($all)+)
+        $crate::handle_this_macros::__then_or_iter!(ALL $($all)+)
     };
     (try while $($all:tt)+) => {
-        ::handle_this_macros::__then_or_iter!(WHILE $($all)+)
+        $crate::handle_this_macros::__then_or_iter!(WHILE $($all)+)
     };
 
     // ========================================
@@ -144,22 +144,22 @@ macro_rules! handle {
 
     // try -> Type { } handlers... (explicit direct mode)
     (try -> $type:ty { $($body:tt)* } $($rest:tt)+) => {
-        ::handle_this_macros::__handle_proc!(SYNC -> $type { $($body)* } $($rest)+)
+        $crate::handle_this_macros::__handle_proc!(SYNC -> $type { $($body)* } $($rest)+)
     };
 
     // try -> Type { } alone (explicit direct mode, no handlers)
     (try -> $type:ty { $($body:tt)* }) => {
-        ::handle_this_macros::__handle_proc!(SYNC -> $type { $($body)* })
+        $crate::handle_this_macros::__handle_proc!(SYNC -> $type { $($body)* })
     };
 
     // try { } handlers...
     (try { $($body:tt)* } $($rest:tt)+) => {
-        ::handle_this_macros::__handle_proc!(SYNC { $($body)* } $($rest)+)
+        $crate::handle_this_macros::__handle_proc!(SYNC { $($body)* } $($rest)+)
     };
 
     // try { } alone - just wraps with stack frame
     (try { $($body:tt)* }) => {
-        ::handle_this_macros::__handle_proc!(SYNC { $($body)* })
+        $crate::handle_this_macros::__handle_proc!(SYNC { $($body)* })
     };
 
     // ========================================
@@ -168,11 +168,11 @@ macro_rules! handle {
 
     // Catch-all: first token preserved with span, proc macro determines error type
     ($first:tt $($rest:tt)*) => {
-        ::handle_this_macros::__handle_proc!(ERROR $first $($rest)*)
+        $crate::handle_this_macros::__handle_proc!(ERROR $first $($rest)*)
     };
 
     // Empty input
     () => {
-        ::handle_this_macros::__handle_proc!(ERROR_EMPTY)
+        $crate::handle_this_macros::__handle_proc!(ERROR_EMPTY)
     };
 }

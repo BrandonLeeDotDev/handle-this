@@ -56,7 +56,7 @@ fn contains_question_mark_impl(tokens: &TokenStream, in_nested_try: bool) -> boo
         }
 
         // Check for proc macro calls from transformed nested patterns
-        // Pattern: `:: handle_this_macros :: __*_proc ! ( ... )`
+        // Pattern: `:: handle_this :: handle_this_macros :: __*_proc ! ( ... )`
         // These handle their own errors, so skip them entirely
         if let Some(skip) = skip_transformed_try_pattern(&tokens_vec[i..]) {
             i += skip;
@@ -82,12 +82,12 @@ fn contains_question_mark_impl(tokens: &TokenStream, in_nested_try: bool) -> boo
 }
 
 /// Skip over a transformed try pattern (proc macro call), returning tokens to skip.
-/// Pattern: `:: handle_this_macros :: __*_proc ! { ... }` or with any delimiter
+/// Pattern: `:: handle_this :: handle_this_macros :: __*_proc ! { ... }` or with any delimiter
 /// Optionally followed by method chain like `.unwrap()` or `?`
 /// Returns None if this isn't a transformed pattern.
 fn skip_transformed_try_pattern(tokens: &[TokenTree]) -> Option<usize> {
-    // Look for `::` starting a path to handle_this_macros
-    if tokens.len() < 7 {
+    // Look for `:: handle_this :: handle_this_macros :: __*_proc ! { ... }`
+    if tokens.len() < 11 {
         return None;
     }
 
@@ -106,11 +106,22 @@ fn skip_transformed_try_pattern(tokens: &[TokenTree]) -> Option<usize> {
         return None;
     }
 
-    // Check for `handle_this_macros`
-    if tokens.len() < 3 {
+    // Check for `handle_this`
+    if let TokenTree::Ident(ident) = &tokens[2] {
+        if ident != "handle_this" {
+            return None;
+        }
+    } else {
         return None;
     }
-    if let TokenTree::Ident(ident) = &tokens[2] {
+
+    // `::` after handle_this
+    if !is_path_sep(3) {
+        return None;
+    }
+
+    // Check for `handle_this_macros`
+    if let TokenTree::Ident(ident) = &tokens[5] {
         if ident != "handle_this_macros" {
             return None;
         }
@@ -119,15 +130,12 @@ fn skip_transformed_try_pattern(tokens: &[TokenTree]) -> Option<usize> {
     }
 
     // `::` after handle_this_macros
-    if !is_path_sep(3) {
+    if !is_path_sep(6) {
         return None;
     }
 
     // Check for `__*_proc` ident
-    if tokens.len() < 6 {
-        return None;
-    }
-    if let TokenTree::Ident(ident) = &tokens[5] {
+    if let TokenTree::Ident(ident) = &tokens[8] {
         let name = ident.to_string();
         if !name.starts_with("__") || !name.ends_with("_proc") {
             return None;
@@ -137,10 +145,7 @@ fn skip_transformed_try_pattern(tokens: &[TokenTree]) -> Option<usize> {
     }
 
     // Check for `!`
-    if tokens.len() < 7 {
-        return None;
-    }
-    if let TokenTree::Punct(p) = &tokens[6] {
+    if let TokenTree::Punct(p) = &tokens[9] {
         if p.as_char() != '!' {
             return None;
         }
@@ -149,15 +154,12 @@ fn skip_transformed_try_pattern(tokens: &[TokenTree]) -> Option<usize> {
     }
 
     // Skip the macro call arguments (can be parentheses, braces, or brackets)
-    if tokens.len() < 8 {
-        return None;
-    }
-    if !matches!(&tokens[7], TokenTree::Group(_)) {
+    if !matches!(&tokens[10], TokenTree::Group(_)) {
         return None;
     }
 
-    // 8 tokens so far: `:: handle_this_macros :: __*_proc ! ( ... )`
-    let mut skip = 8;
+    // 11 tokens so far: `:: handle_this :: handle_this_macros :: __*_proc ! ( ... )`
+    let mut skip = 11;
 
     // Optionally skip `.unwrap()` or `.unwrap_or_else(...)` etc.
     while skip + 1 < tokens.len() {
@@ -410,8 +412,8 @@ mod tests {
 
     #[test]
     fn test_skip_transformed_try_pattern_with_braces() {
-        // Simulate transformed pattern: ::handle_this_macros::__sync_try_proc!{ ... }
-        let tokens = quote!(::handle_this_macros::__sync_try_proc!{ try { x? } catch { 1 } });
+        // Simulate transformed pattern: ::handle_this::handle_this_macros::__sync_try_proc!{ ... }
+        let tokens = quote!(::handle_this::handle_this_macros::__sync_try_proc!{ try { x? } catch { 1 } });
         let tokens_vec: Vec<TokenTree> = tokens.clone().into_iter().collect();
 
         let skip = skip_transformed_try_pattern(&tokens_vec);
@@ -419,7 +421,7 @@ mod tests {
 
         // Should skip the entire pattern
         let skip_count = skip.unwrap();
-        assert_eq!(skip_count, 8, "Should skip 8 tokens: :: handle_this_macros :: __sync_try_proc ! {{ ... }}");
+        assert_eq!(skip_count, 11, "Should skip 11 tokens: :: handle_this :: handle_this_macros :: __sync_try_proc ! {{ ... }}");
 
         // contains_question_mark should skip it
         let has_q = contains_question_mark(&tokens);
@@ -429,7 +431,7 @@ mod tests {
     #[test]
     fn test_skip_transformed_try_pattern_no_unwrap() {
         // Pattern without .unwrap() - used when control flow is present
-        let tokens = quote!(::handle_this_macros::__sync_try_proc!{ continue });
+        let tokens = quote!(::handle_this::handle_this_macros::__sync_try_proc!{ continue });
         let has_q = contains_question_mark(&tokens);
         assert!(!has_q, "Transformed pattern without unwrap should be skipped");
     }

@@ -190,7 +190,7 @@ fn try_transform_async_try(tokens: &[TokenTree]) -> Option<(TokenStream, usize)>
         let handler_stream: TokenStream = handler_tokens.into_iter().collect();
         // Use ? to propagate - allows catch bodies with ? to propagate new errors
         quote! {
-            ::handle_this_macros::__async_try_proc!({ #try_body } #handler_stream)?
+            ::handle_this::handle_this_macros::__async_try_proc!({ #try_body } #handler_stream)?
         }
     };
 
@@ -241,7 +241,7 @@ fn try_transform_try_block_with_type(tokens: &[TokenTree]) -> Option<(TokenStrea
     // The __sync_try_proc handles the match internally and extracts the value.
     // No .unwrap() or ? needed.
     let transformed = quote! {
-        ::handle_this_macros::__sync_try_proc!(-> #type_stream { #try_body } #handler_stream)
+        ::handle_this::handle_this_macros::__sync_try_proc!(-> #type_stream { #try_body } #handler_stream)
     };
 
     Some((transformed, i))
@@ -277,12 +277,12 @@ fn try_transform_try_block(tokens: &[TokenTree]) -> Option<(TokenStream, usize)>
             // Body contains control flow (from nested try with break/continue in catch)
             // Don't use ? because the body returns a direct value, not Result
             quote_spanned! {try_span=>
-                ::handle_this_macros::__sync_try_proc!({ #try_body })
+                ::handle_this::handle_this_macros::__sync_try_proc!({ #try_body })
             }
         } else {
             // Standard case - wrap in try block and propagate with ?
             quote_spanned! {try_span=>
-                ::handle_this_macros::__sync_try_proc!({ #try_body })?
+                ::handle_this::handle_this_macros::__sync_try_proc!({ #try_body })?
             }
         }
     } else {
@@ -294,17 +294,17 @@ fn try_transform_try_block(tokens: &[TokenTree]) -> Option<(TokenStream, usize)>
             // Control flow present - returns direct value (signal mode)
             // Even typed catches use unreachable fallback to maintain type compatibility
             quote_spanned! {try_span=>
-                ::handle_this_macros::__sync_try_proc!({ #try_body } #handler_stream)
+                ::handle_this::handle_this_macros::__sync_try_proc!({ #try_body } #handler_stream)
             }
         } else if has_catch_all {
             // Safe catch-all: handler guarantees all errors are handled, result is always Ok
             quote_spanned! {try_span=>
-                ::handle_this_macros::__sync_try_proc!({ #try_body } #handler_stream).unwrap()
+                ::handle_this::handle_this_macros::__sync_try_proc!({ #try_body } #handler_stream).unwrap()
             }
         } else {
             // Use ? to propagate errors - this allows catch bodies with ? to propagate new errors
             quote_spanned! {try_span=>
-                ::handle_this_macros::__sync_try_proc!({ #try_body } #handler_stream)?
+                ::handle_this::handle_this_macros::__sync_try_proc!({ #try_body } #handler_stream)?
             }
         }
     };
@@ -356,15 +356,15 @@ fn try_transform_try_while(tokens: &[TokenTree]) -> Option<(TokenStream, usize)>
     let transformed = if has_control_flow_catch || body_has_control_flow {
         // Signal mode: generates a complete match expression, no wrapper needed
         quote! {
-            ::handle_this_macros::__try_while_proc!(#condition { #body } #handlers)
+            ::handle_this::handle_this_macros::__try_while_proc!(#condition { #body } #handlers)
         }
     } else if has_catch_all {
         quote! {
-            ::handle_this_macros::__try_while_proc!(#condition { #body } #handlers).unwrap()
+            ::handle_this::handle_this_macros::__try_while_proc!(#condition { #body } #handlers).unwrap()
         }
     } else {
         quote! {
-            ::handle_this_macros::__try_while_proc!(#condition { #body } #handlers)?
+            ::handle_this::handle_this_macros::__try_while_proc!(#condition { #body } #handlers)?
         }
     };
 
@@ -439,15 +439,15 @@ fn try_transform_iter_pattern(tokens: &[TokenTree], kind: IterPatternKind) -> Op
             if has_control_flow_catch || body_has_control_flow {
                 // Signal mode: generates a complete match expression, no wrapper needed
                 quote! {
-                    ::handle_this_macros::__try_all_proc!(#pattern in #iter { #body } #handlers)
+                    ::handle_this::handle_this_macros::__try_all_proc!(#pattern in #iter { #body } #handlers)
                 }
             } else if has_catch_all {
                 quote! {
-                    ::handle_this_macros::__try_all_proc!(#pattern in #iter { #body } #handlers).unwrap()
+                    ::handle_this::handle_this_macros::__try_all_proc!(#pattern in #iter { #body } #handlers).unwrap()
                 }
             } else {
                 quote! {
-                    ::handle_this_macros::__try_all_proc!(#pattern in #iter { #body } #handlers)?
+                    ::handle_this::handle_this_macros::__try_all_proc!(#pattern in #iter { #body } #handlers)?
                 }
             }
         }
@@ -458,8 +458,8 @@ fn try_transform_iter_pattern(tokens: &[TokenTree], kind: IterPatternKind) -> Op
             let handlers: TokenStream = handler_tokens.into_iter().collect();
 
             let proc_macro = match kind {
-                IterPatternKind::For => quote! { ::handle_this_macros::__try_for_proc },
-                IterPatternKind::Any => quote! { ::handle_this_macros::__try_any_proc },
+                IterPatternKind::For => quote! { ::handle_this::handle_this_macros::__try_for_proc },
+                IterPatternKind::Any => quote! { ::handle_this::handle_this_macros::__try_any_proc },
                 IterPatternKind::All => unreachable!(),
             };
 
@@ -1039,20 +1039,20 @@ fn try_transform_try_when(tokens: &[TokenTree]) -> Option<(TokenStream, usize)> 
         if has_explicit_else {
             if has_catch_all {
                 quote! {
-                    ::handle_this_macros::__sync_try_proc!({
+                    ::handle_this::handle_this_macros::__sync_try_proc!({
                         #if_chain?
                     } #handler_stream).unwrap()
                 }
             } else {
                 quote! {
-                    ::handle_this_macros::__sync_try_proc!({
+                    ::handle_this::handle_this_macros::__sync_try_proc!({
                         #if_chain?
                     } #handler_stream)?
                 }
             }
         } else if has_catch_all {
             quote! {
-                ::handle_this_macros::__sync_try_proc!({
+                ::handle_this::handle_this_macros::__sync_try_proc!({
                     #if_chain else {
                         ::core::result::Result::Ok(())
                     }?
@@ -1060,7 +1060,7 @@ fn try_transform_try_when(tokens: &[TokenTree]) -> Option<(TokenStream, usize)> 
             }
         } else {
             quote! {
-                ::handle_this_macros::__sync_try_proc!({
+                ::handle_this::handle_this_macros::__sync_try_proc!({
                     #if_chain else {
                         ::core::result::Result::Ok(())
                     }?

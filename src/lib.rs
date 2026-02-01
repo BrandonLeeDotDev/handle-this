@@ -17,20 +17,67 @@
 //!
 //! # Patterns
 //!
+//! ## Basic
+//!
 //! | Pattern | Description |
 //! |---------|-------------|
 //! | `try { }` | Execute, wrap error with trace |
 //! | `try { } catch e { }` | Recover from error |
 //! | `try { } catch Type(e) { }` | Recover only specific type |
+//! | `try { } catch Type(e) { } else { }` | Typed catch with fallback |
+//! | `try { } try catch e { }` | Fallible recovery (body returns Result) |
 //! | `try { } throw e { }` | Transform error |
+//! | `try { } throw Type(e) { }` | Transform only specific type |
 //! | `try { } inspect e { }` | Side effect, then propagate |
 //! | `try { } finally { }` | Cleanup always runs |
-//! | `try { } with "ctx"` | Add context |
-//! | `async try { }` | Async version |
+//! | `try -> T { } else { }` | Infallible (returns T, not Result) |
+//!
+//! ## Guards
+//!
+//! | Pattern | Description |
+//! |---------|-------------|
+//! | `catch e when cond { }` | Conditional catch |
+//! | `catch Type(e) when cond { }` | Typed with guard |
+//! | `throw e when cond { }` | Conditional transform |
+//! | `catch Type(e) match expr { arms }` | Match on error value |
+//!
+//! ## Chain Search
+//!
+//! | Pattern | Description |
+//! |---------|-------------|
+//! | `catch any Type(e) { }` | First matching error in cause chain |
+//! | `catch all Type \|errs\| { }` | All matching errors as Vec |
+//!
+//! ## Context
+//!
+//! | Pattern | Description |
+//! |---------|-------------|
+//! | `try { } with "message"` | Add context message |
+//! | `try { } with { key: val }` | Add structured data |
+//! | `try { } with "msg", { key: val }` | Both message and data |
+//! | `scope "name", try { }` | Hierarchical scope |
+//! | `require cond else "msg", try { }` | Precondition check |
+//!
+//! ## Chaining
+//!
+//! | Pattern | Description |
+//! |---------|-------------|
+//! | `try { a()? }, then \|x\| { b(x)? }` | Chain operations |
+//!
+//! ## Iteration
+//!
+//! | Pattern | Description |
+//! |---------|-------------|
 //! | `try for x in iter { }` | First success |
 //! | `try any x in iter { }` | Alias for try for |
 //! | `try all x in iter { }` | Collect all results |
 //! | `try while cond { }` | Retry loop |
+//!
+//! ## Async
+//!
+//! | Pattern | Description |
+//! |---------|-------------|
+//! | `async try { }` | Async version (all patterns supported) |
 
 #![cfg_attr(not(feature = "std"), no_std)]
 

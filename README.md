@@ -438,14 +438,14 @@ handle! {
 
 ### Control Flow
 
-Loop handlers support break/continue to outer loops:
+Handlers support `break`/`continue` to control the enclosing loop:
 
 ```rust
-'outer: for batch in batches {
+for batch in batches {
     handle! {
         try for item in batch { process(item)? }
-        catch FatalError(_) { break 'outer }
-        catch RetryableError(_) { continue 'outer }
+        catch FatalError(_) { break }       // exits the for-batch loop
+        catch RetryableError(_) { continue } // skips to next batch
     };
 }
 ```
